@@ -1,0 +1,15 @@
+{
+  "common": {
+    "welcome": "Bienvenue",
+    "home": "Accueil",
+    "services": "Services",
+    "team": "Équipe",
+    "contact": "Contact",
+    "booking": "Réservation"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion"
+  }
+}

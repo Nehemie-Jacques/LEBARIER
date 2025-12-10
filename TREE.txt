@@ -1,0 +1,190 @@
+.
+|-- docs
+|   |-- API.md
+|   |-- ARCHITECTURE.md
+|   |-- CONTRIBUTING.md
+|   `-- DEPLOYMENT.md
+|-- GETTING_STARTED.md
+|-- prettier.config.js
+|-- prisma
+|   |-- migrations
+|   |-- schema.prisma
+|   `-- seed.ts
+|-- public
+|   |-- fonts
+|   |-- icons
+|   `-- images
+|       |-- hero
+|       |-- logo.svg
+|       |-- services
+|       `-- team
+|-- README.md
+|-- scripts
+|   |-- backup-db.sh
+|   |-- deploy.sh
+|   `-- seed-db.ts
+|-- src
+|   |-- app
+|   |   |-- admin
+|   |   |   |-- analytics
+|   |   |   |-- appointments
+|   |   |   |-- content
+|   |   |   |-- employees
+|   |   |   |-- layout.tsx
+|   |   |   |-- marketing
+|   |   |   |-- orders
+|   |   |   |-- page.tsx
+|   |   |   |-- products
+|   |   |   |-- reviews
+|   |   |   |-- services
+|   |   |   |-- settings
+|   |   |   `-- users
+|   |   |-- api
+|   |   |   |-- appointments
+|   |   |   |-- auth
+|   |   |   |-- chatbot
+|   |   |   |-- employees
+|   |   |   |-- loyalty
+|   |   |   |-- notifications
+|   |   |   |-- orders
+|   |   |   |-- payments
+|   |   |   |-- products
+|   |   |   |-- reviews
+|   |   |   |-- services
+|   |   |   |-- upload
+|   |   |   `-- webhooks
+|   |   |-- (auth)
+|   |   |   |-- forgot-password
+|   |   |   |-- login
+|   |   |   |-- register
+|   |   |   `-- verify-email
+|   |   |-- booking
+|   |   |   |-- confirmation
+|   |   |   |-- datetime
+|   |   |   |-- employee
+|   |   |   |-- location
+|   |   |   |-- page.tsx
+|   |   |   `-- payment
+|   |   |-- employee
+|   |   |   |-- appointments
+|   |   |   |-- layout.tsx
+|   |   |   |-- page.tsx
+|   |   |   |-- portfolio
+|   |   |   |-- schedule
+|   |   |   `-- stats
+|   |   |-- error.tsx
+|   |   |-- layout.tsx
+|   |   |-- loading.tsx
+|   |   |-- (main)
+|   |   |   |-- about
+|   |   |   |-- blog
+|   |   |   |-- contact
+|   |   |   |-- gallery
+|   |   |   |-- layout.tsx
+|   |   |   |-- services
+|   |   |   `-- team
+|   |   |-- not-found.tsx
+|   |   |-- page.tsx
+|   |   |-- profile
+|   |   |   |-- appointments
+|   |   |   |-- favorites
+|   |   |   |-- layout.tsx
+|   |   |   |-- loyalty
+|   |   |   |-- orders
+|   |   |   |-- page.tsx
+|   |   |   `-- settings
+|   |   `-- shop
+|   |       |-- cart
+|   |       |-- checkout
+|   |       |-- page.tsx
+|   |       `-- [slug]
+|   |-- components
+|   |   |-- admin
+|   |   |   |-- AdminSidebar.tsx
+|   |   |   `-- DashboardStats.tsx
+|   |   |-- booking
+|   |   |   |-- BookingStepper.tsx
+|   |   |   |-- EmployeeSelector.tsx
+|   |   |   `-- ServiceSelector.tsx
+|   |   |-- chatbot
+|   |   |   `-- ChatWidget.tsx
+|   |   |-- common
+|   |   |   |-- ErrorBoundary.tsx
+|   |   |   `-- LoadingSpinner.tsx
+|   |   |-- home
+|   |   |   |-- HeroSection.tsx
+|   |   |   |-- ServicesGrid.tsx
+|   |   |   `-- TeamCarousel.tsx
+|   |   |-- layout
+|   |   |   |-- Breadcrumb.tsx
+|   |   |   |-- Footer.tsx
+|   |   |   |-- Header.tsx
+|   |   |   |-- MobileMenu.tsx
+|   |   |   `-- Sidebar.tsx
+|   |   |-- notifications
+|   |   |   `-- NotificationBell.tsx
+|   |   |-- profile
+|   |   |   `-- ProfileSidebar.tsx
+|   |   |-- reviews
+|   |   |   `-- ReviewCard.tsx
+|   |   |-- services
+|   |   |   `-- ServiceCard.tsx
+|   |   |-- shop
+|   |   |   |-- CartDrawer.tsx
+|   |   |   `-- ProductCard.tsx
+|   |   |-- team
+|   |   |   `-- EmployeeCard.tsx
+|   |   `-- ui
+|   |       |-- button.tsx
+|   |       |-- card.tsx
+|   |       |-- dialog.tsx
+|   |       `-- input.tsx
+|   |-- hooks
+|   |   |-- useAuth.ts
+|   |   |-- useBooking.ts
+|   |   `-- useCart.ts
+|   |-- i18n
+|   |   |-- config.ts
+|   |   |-- locales
+|   |   |   |-- en.json
+|   |   |   `-- fr.json
+|   |   `-- utils.ts
+|   |-- lib
+|   |   |-- analytics
+|   |   |   `-- google-analytics.ts
+|   |   |-- auth.ts
+|   |   |-- chatbot
+|   |   |   `-- openai.ts
+|   |   |-- constants.ts
+|   |   |-- email
+|   |   |   |-- sendgrid.ts
+|   |   |   `-- templates
+|   |   |-- payments
+|   |   |   |-- momo.ts
+|   |   |   |-- orange-money.ts
+|   |   |   `-- stripe.ts
+|   |   |-- prisma.ts
+|   |   |-- sms
+|   |   |   `-- twilio.ts
+|   |   |-- storage
+|   |   |   `-- s3.ts
+|   |   |-- utils.ts
+|   |   `-- validations.ts
+|   |-- store
+|   |   |-- authStore.ts
+|   |   |-- bookingStore.ts
+|   |   `-- cartStore.ts
+|   |-- styles
+|   |   `-- globals.css
+|   `-- types
+|       |-- api.ts
+|       |-- global.d.ts
+|       `-- models.ts
+|-- STRUCTURE.md
+|-- tests
+|   |-- e2e
+|   |-- integration
+|   `-- unit
+`-- TREE.txt
+
+105 directories, 83 files
