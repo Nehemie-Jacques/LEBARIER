@@ -5,6 +5,7 @@ Application web moderne pour la gestion d'un salon de coiffure avec système de 
 ## 🚀 Fonctionnalités
 
 ### Pour les Clients
+
 - ✅ Réservation de rendez-vous en ligne
 - 🛒 Boutique de produits capillaires
 - 💳 Paiements (Orange Money, Mobile Money, Stripe)
@@ -14,12 +15,14 @@ Application web moderne pour la gestion d'un salon de coiffure avec système de 
 - 🌐 Support multilingue (FR/EN)
 
 ### Pour les Employés
+
 - 📅 Gestion du planning
 - 📊 Statistiques personnelles
 - 🖼️ Portfolio de réalisations
 - 🔔 Notifications de rendez-vous
 
 ### Pour les Administrateurs
+
 - 📈 Dashboard complet
 - 👥 Gestion des utilisateurs et employés
 - 💼 Gestion des services et produits
@@ -45,29 +48,35 @@ Application web moderne pour la gestion d'un salon de coiffure avec système de 
 ## 📦 Installation
 
 1. **Cloner le repository**
+
 ```bash
 git clone https://github.com/votre-username/le-barbier.git
 cd le-barbier
 ```
 
 2. **Installer les dépendances**
+
 ```bash
 npm install
 ```
 
 3. **Configurer les variables d'environnement**
+
 ```bash
 cp .env.example .env.local
 ```
+
 Remplissez les variables dans `.env.local`
 
 4. **Initialiser la base de données**
+
 ```bash
 npx prisma migrate dev
 npx prisma db seed
 ```
 
 5. **Lancer le serveur de développement**
+
 ```bash
 npm run dev
 ```
@@ -147,7 +156,7 @@ Ce projet est sous licence MIT.
 
 ## 👥 Auteurs
 
-- **Votre Nom** - Développeur principal
+- **Sighe Nehemie** - Développeur principal
 
 ## 🙏 Remerciements
 
