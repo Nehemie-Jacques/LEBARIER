@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display, Montserrat } from 'next/font/google';
-import { Toaster } from 'sonner';
+// import { Toaster } from 'sonner'; // TODO: Installer sonner avec npm install sonner
 import './globals.css';
 
 // Fonts
@@ -9,7 +9,7 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
 });
-  
+
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
@@ -123,8 +123,8 @@ export default function RootLayout({
         {/* Main Content */}
         {children}
 
-        {/* Toast Notifications */}
-        <Toaster
+        {/* Toast Notifications - TODO: Décommenter après installation de sonner */}
+        {/* <Toaster
           position="top-right"
           expand={false}
           richColors
@@ -139,7 +139,7 @@ export default function RootLayout({
               fontFamily: 'var(--font-inter)',
             },
           }}
-        />
+        /> */}
 
         {/* Analytics */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
