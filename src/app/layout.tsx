@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display, Montserrat } from 'next/font/google';
-// import { Toaster } from 'sonner'; // TODO: Installer sonner avec npm install sonner
-import './globals.css';
+import { Toaster } from 'sonner'; // TODO: Installer sonner avec npm install sonner
+import '@/styles/globals.css';
 
 // Fonts
 const inter = Inter({
