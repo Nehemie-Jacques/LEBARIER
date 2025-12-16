@@ -1,42 +1,42 @@
-import HeroSection from '@/components/home/HeroSection';
-import ServicesGrid from '@/components/home/ServicesGrid';
-import TeamCarousel from '@/components/home/TeamCarousel';
-import GallerySection from '@/components/home/GallerySection';
-import LoyaltySection from '@/components/home/LoyaltySection';
-import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
-import CTASection from '@/components/home/CTASection';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+// import HeroSection from '@/components/home/HeroSection';
+// import ServicesGrid from '@/components/home/ServicesGrid';
+// import TeamCarousel from '@/components/home/TeamCarousel';
+// import GallerySection from '@/components/home/GallerySection';
+// import LoyaltySection from '@/components/home/LoyaltySection';
+// import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
+// import CTASection from '@/components/home/CTASection';
+// import Header from '@/components/layout/Header';
+// import Footer from '@/components/layout/Footer';
 
 export default function HomePage() {
   return (
     <>
-      <Header />
-      
+      {/* <Header /> */}
+
       <main className="overflow-x-hidden">
         {/* Hero Section - Full Viewport */}
-        <HeroSection />
+        {/* <HeroSection /> */}
 
         {/* Services Premium */}
-        <ServicesGrid />
+        {/* <ServicesGrid /> */}
 
         {/* Team - Nos Maîtres Barbiers */}
-        <TeamCarousel />
+        {/* <TeamCarousel /> */}
 
         {/* Gallery - Transformations Avant/Après */}
-        <GallerySection />
+        {/* <GallerySection /> */}
 
         {/* Programme de Fidélité */}
-        <LoyaltySection />
+        {/* <LoyaltySection /> */}
 
         {/* Témoignages Clients */}
-        <TestimonialsCarousel />
+        {/* <TestimonialsCarousel /> */}
 
         {/* CTA Final */}
-        <CTASection />
+        {/* <CTASection /> */}
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
