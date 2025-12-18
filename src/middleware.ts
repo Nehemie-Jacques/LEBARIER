@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { auth } from '@/lib/auth';
 
 // Routes qui nécessitent une authentification
 const protectedRoutes = [
@@ -28,24 +28,19 @@ const authRoutes = [
   '/reset-password',
 ];
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // Récupérer le token JWT
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+  const session = req.auth;
 
   // Si l'utilisateur est connecté et essaie d'accéder aux pages d'auth
-  if (token && authRoutes.some((route) => pathname.startsWith(route))) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+  if (session && authRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL('/profile', req.url));
   }
 
   // Protection des routes utilisateurs
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    if (!token) {
-      const loginUrl = new URL('/login', request.url);
+    if (!session) {
+      const loginUrl = new URL('/login', req.url);
       loginUrl.searchParams.set('callbackUrl', pathname);
       return NextResponse.redirect(loginUrl);
     }
@@ -53,37 +48,34 @@ export async function middleware(request: NextRequest) {
 
   // Protection des routes employés
   if (employeeRoutes.some((route) => pathname.startsWith(route))) {
-    if (!token) {
-      const loginUrl = new URL('/login', request.url);
+    if (!session) {
+      const loginUrl = new URL('/login', req.url);
       loginUrl.searchParams.set('callbackUrl', pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    if (token.role !== 'EMPLOYEE' && token.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/profile', request.url));
+    const userRole = (session.user as any)?.role;
+    if (userRole !== 'EMPLOYEE' && userRole !== 'ADMIN') {
+      return NextResponse.redirect(new URL('/profile', req.url));
     }
   }
 
   // Protection des routes admin
   if (adminRoutes.some((route) => pathname.startsWith(route))) {
-    if (!token) {
-      const loginUrl = new URL('/login', request.url);
+    if (!session) {
+      const loginUrl = new URL('/login', req.url);
       loginUrl.searchParams.set('callbackUrl', pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    if (token.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/profile', request.url));
+    const userRole = (session.user as any)?.role;
+    if (userRole !== 'ADMIN') {
+      return NextResponse.redirect(new URL('/profile', req.url));
     }
   }
 
-  // Vérifier si le compte est actif
-  if (token && !token.isActive && !authRoutes.some((route) => pathname.startsWith(route))) {
-    return NextResponse.redirect(new URL('/account-disabled', request.url));
-  }
-
   return NextResponse.next();
-}
+});
 
 // Configuration du matcher pour optimiser les performances
 export const config = {
