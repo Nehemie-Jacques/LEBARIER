@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -312,3 +313,63 @@ declare module 'next-auth/jwt' {
     emailVerified: Date | null;
   }
 }
+
+/**
+ * ============================================
+ * 🔐 HELPER AUTH POUR SERVER COMPONENTS
+ * ============================================
+ */
+
+// Export de NextAuth configuré pour utilisation dans les Server Components et API Routes
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
+
+/**
+ * Exemple d'utilisation dans un Server Component:
+ * 
+ * ```typescript
+ * import { auth } from '@/lib/auth';
+ * 
+ * export default async function DashboardPage() {
+ *   const session = await auth();
+ *   
+ *   if (!session?.user) {
+ *     redirect('/login');
+ *   }
+ *   
+ *   return (
+ *     <div>
+ *       <h1>Bienvenue {session.user.name}</h1>
+ *       <p>Rôle: {session.user.role}</p>
+ *       <p>Points de fidélité: {session.user.loyaltyPoints}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
+ * 
+ * Exemple d'utilisation dans une API Route:
+ * 
+ * ```typescript
+ * import { auth } from '@/lib/auth';
+ * import { NextResponse } from 'next/server';
+ * 
+ * export async function GET() {
+ *   const session = await auth();
+ *   
+ *   if (!session) {
+ *     return NextResponse.json(
+ *       { error: 'Non authentifié' },
+ *       { status: 401 }
+ *     );
+ *   }
+ *   
+ *   if (session.user.role !== 'ADMIN') {
+ *     return NextResponse.json(
+ *       { error: 'Accès refusé' },
+ *       { status: 403 }
+ *     );
+ *   }
+ *   
+ *   return NextResponse.json({ data: 'Protected data' });
+ * }
+ * ```
+ */
