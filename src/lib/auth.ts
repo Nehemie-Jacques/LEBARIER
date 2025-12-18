@@ -1,83 +1,69 @@
-import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from 'bcryptjs';
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-// Schema de validation pour le login
 const loginSchema = z.object({
-  email: z.string().email('❌ Email invalide'),
-  password: z.string().min(6, '❌ Le mot de passe doit contenir au moins 6 caractères'),
+  email: z.string().email(),
+  password: z.string().min(6),
 });
 
-export const authOptions: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma) as any,
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
+
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
 
   providers: [
-    // 🔐 Authentification par email et mot de passe
     CredentialsProvider({
       id: 'credentials',
       name: 'Credentials',
       credentials: {
-        email: { label: '📧 Email', type: 'email' },
-        password: { label: '🔒 Mot de passe', type: 'password' },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         try {
-          // ✅ Validation des crédentials
-          const validatesCredentials = loginSchema.parse(credentials);
-
-          // 🔍 Recherche de l'utilisateur dans la base de données
+          console.log('🔐 Connexion:', credentials?.email);
+          const validated = loginSchema.parse(credentials);
+          
           const user = await prisma.user.findUnique({
-            where: { email: validatesCredentials.email },
-            include: {
-              employee: true,
-            },
+            where: { email: validated.email },
           });
 
-          // ⚠️ Vérification de l'existence de l'utilisateur et du mot de passe
-          if (!user) {
-            throw new Error('❌ Email ou mot de passe incorrect');
+          if (!user || !user.password) {
+            return null;
           }
 
-          if (!user.password) {
-            throw new Error('🔗 Utilisez la connexion via Google');
-          }
-
-          // 🔐 Vérification du mot de passe
-          const isValid = await bcrypt.compare(
-            validatesCredentials.password,
-            user.password!
-          );
-
+          const isValid = await bcrypt.compare(validated.password, user.password);
           if (!isValid) {
-            throw new Error('❌ Email ou mot de passe incorrect');
+            return null;
           }
 
-          // ✅ Retour des données utilisateur
           return {
             id: user.id,
             email: user.email,
             name: `${user.firstName} ${user.lastName}`,
+            image: user.avatar,
             role: user.role,
             firstName: user.firstName,
             lastName: user.lastName,
             phone: user.phone,
-            emailVerified: user.emailVerified,
-            loyaltyPoints: user.loyaltyPoints,
-            loyaltyTier: user.loyaltyTier,
           };
         } catch (error) {
-          console.error('🚨 Auth error:', error);
-          throw error;
+          console.error('Erreur authorize:', error);
+          return null;
         }
       },
     }),
 
-    // 🌐 Authentification via Google
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
@@ -85,291 +71,60 @@ export const authOptions: NextAuthConfig = {
     }),
   ],
 
-  // 📄 Pages personnalisées pour l'authentification
-  pages: {
-    signIn: '/login',
-    signOut: '/logout',
-    error: '/login',
-    verifyRequest: '/verify-email',
-    newUser: '/onboarding', // 🆕 Redirection après la création d'un nouvel utilisateur
-  },
-
-  // ⏱️ Configuration des sessions
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 jours
-    updateAge: 24 * 60 * 60, // 24 heures
-  },
-
-  // 🎫 Configuration des JWT
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 jours
-  },
-
-  // 🔄 Callbacks pour personnaliser le comportement de NextAuth
   callbacks: {
-    // 🎫 Callback JWT - Ajout des informations utilisateur au token JWT
-    async jwt({ token, user, trigger, session }) {
-      // 🆕 Première connexion - ajout des informations utilisateur au token
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id!;
-        token.role = user.role;
-        token.firstName = user.firstName;
-        token.lastName = user.lastName;
-        token.phone = user.phone;
-        token.loyaltyPoints = user.loyaltyPoints;
-        token.loyaltyTier = user.loyaltyTier;
-        token.emailVerified = user.emailVerified;
+        token.email = user.email!;
+        token.role = (user as any).role || 'CLIENT';
+        token.firstName = (user as any).firstName || '';
+        token.lastName = (user as any).lastName || '';
+        token.phone = (user as any).phone || '';
+        token.image = user.image || null;
       }
-
-      // 🔄 Mise à jour de la session
-      if (token.id) {
-        const freshUser = await prisma.user.findUnique({
-          where: { id: token.id as string },
-          select: {
-            id: true,
-            email: true,
-            role: true,
-            firstName: true,
-            lastName: true,
-            phone: true,
-            avatar: true,
-            loyaltyPoints: true,
-            loyaltyTier: true,
-            isActive: true,
-            emailVerified: true,
-          },
-        });
-
-        if (freshUser) {
-          token.role = freshUser.role;
-          token.firstName = freshUser.firstName;
-          token.lastName = freshUser.lastName;
-          token.loyaltyPoints = freshUser.loyaltyPoints;
-          token.loyaltyTier = freshUser.loyaltyTier;
-          token.isActive = freshUser.isActive;
-          token.emailVerified = freshUser.emailVerified;
-          token.picture = freshUser.avatar;
-        }
-      }
-
       return token;
     },
 
-    // 👤 Callback Session - Ajout des informations utilisateur à la session
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-        session.user.firstName = token.firstName as string;
-        session.user.lastName = token.lastName as string;
-        session.user.phone = token.phone as string;
-        session.user.loyaltyPoints = token.loyaltyPoints as number;
-        session.user.loyaltyTier = token.loyaltyTier as string;
-        session.user.emailVerified = token.emailVerified as Date | null;
+      if (token && session.user) {
+        (session.user as any).id = token.id;
+        (session.user as any).email = token.email;
+        (session.user as any).role = token.role;
+        (session.user as any).firstName = token.firstName;
+        (session.user as any).lastName = token.lastName;
+        (session.user as any).phone = token.phone;
+        session.user.image = token.image as string;
       }
       return session;
     },
 
-    // 🔀 Callback Redirect - Redirection après la connexion
-    async redirect({ url, baseUrl }) {
-      // ➡️ Redirection vers l'URL d'origine si elle appartient au même domaine
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      // 🏠 Sinon, redirection vers la page d'accueil
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    },
-
-    // ✅ Callback SignIn - Contrôle d'accès lors de la connexion
-    async signIn({ user, account, profile }) {
-      // 🌐 Si l'utilisateur utilise Google, vérifier s'il est actif
-      if (profile?.email) {
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
         const existingUser = await prisma.user.findUnique({
-          where: { email: profile.email },
+          where: { email: user.email! },
         });
 
-        // 🔄 Si l'utilisateur existe déjà, mettre à jour son statut actif
-        if (existingUser) {
-          await prisma.user.update({
-            where: { email: profile.email },
-            data: {
-              emailVerified: new Date(),
-              avatar: profile.picture,
-            },
-          });
-        } else {
-          // 🆕 Si l'utilisateur n'existe pas, le créer
-          const [firstName, ...lastNameParts] = (profile.name || '').split(' ');
+        if (!existingUser) {
           await prisma.user.create({
             data: {
-              email: profile.email,
-              firstName: firstName || 'Prénom',
-              lastName: lastNameParts.join(' ') || 'Nom',
-              avatar: profile.picture,
-              emailVerified: new Date(),
+              email: user.email!,
+              firstName: user.name?.split(' ')[0] || 'User',
+              lastName: user.name?.split(' ').slice(1).join(' ') || '',
+              phone: '+237000000000',
+              avatar: user.image,
               role: 'CLIENT',
-              phone: '', // ⚠️ À compléter lors de l'onboarding  
+              isActive: true,
+              emailVerified: new Date(),
+              loyaltyPoints: 0,
+              loyaltyTier: 'BRONZE',
             },
           });
         }
       }
-
-      // 🔐 Pour les credentials, vérifier que l'utilisateur est actif
-      if (account?.provider === 'credentials') {
-        const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
-        });
-
-        if (!dbUser?.isActive) {
-          throw new Error('❌ Compte désactivé');
-        }
-      }
-
-      return true; // ✅ Autoriser la connexion
+      return true;
     },
   },
 
-  // 📋 Events - Gestion des événements liés à l'authentification
-  events: {
-    async signIn({ user, account, isNewUser }) {
-      console.log(`✅ Connexion: ${user.email} via ${account?.provider}`);
-
-      // 📝 Log de connexion
-      await prisma.systemLog.create({
-        data: {
-          level: 'INFO',
-          message: `✅ Connexion réussie: ${user.email}`,
-          context: {
-            userId: user.id,
-            provider: account?.provider || 'unknown',
-            isNewUser,
-          },
-        },
-      });
-
-      // 📧 Envoyer un email de bienvenue pour les nouveaux utilisateurs
-      if (isNewUser) {
-        // TODO: Envoi d'email de bienvenue
-        console.log(`🎉 Bienvenue ${user.email}! Email de bienvenue à envoyer.`);
-      }
-    },
-
-    async signOut() {
-      console.log(`👋 Déconnexion effectuée`);
-    },
-
-    async createUser({ user }) {
-      console.log(' 👤 Nouvel utilisateur créé:', user.email);
-    },
-
-    async linkAccount({ user, account }) {
-      console.log(`🔗 Compte lié: ${user.email} via ${account.provider}`);
-    },
-  },
-
-  // Configuration debug 
   debug: process.env.NODE_ENV === 'development',
-};
-
-// Type de la session étendue
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      id: string;
-      email: string;
-      name: string;
-      image?: string | null;
-      role: string;
-      firstName: string;
-      lastName: string;
-      phone: string;
-      loyaltyPoints: number;
-      loyaltyTier: string;
-      emailVerified: Date | null;
-    };
-  }
-
-  interface User {
-    role: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-    loyaltyPoints: number;
-    loyaltyTier: string;
-    emailVerified: Date | null;
-  }
-}
-
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string;
-    role: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-    loyaltyPoints: number;
-    loyaltyTier: string;
-    isActive: boolean;
-    emailVerified: Date | null;
-  }
-}
-
-/**
- * ============================================
- * 🔐 HELPER AUTH POUR SERVER COMPONENTS
- * ============================================
- */
-
-// Export de NextAuth configuré pour utilisation dans les Server Components et API Routes
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
-
-/**
- * Exemple d'utilisation dans un Server Component:
- * 
- * ```typescript
- * import { auth } from '@/lib/auth';
- * 
- * export default async function DashboardPage() {
- *   const session = await auth();
- *   
- *   if (!session?.user) {
- *     redirect('/login');
- *   }
- *   
- *   return (
- *     <div>
- *       <h1>Bienvenue {session.user.name}</h1>
- *       <p>Rôle: {session.user.role}</p>
- *       <p>Points de fidélité: {session.user.loyaltyPoints}</p>
- *     </div>
- *   );
- * }
- * ```
- * 
- * Exemple d'utilisation dans une API Route:
- * 
- * ```typescript
- * import { auth } from '@/lib/auth';
- * import { NextResponse } from 'next/server';
- * 
- * export async function GET() {
- *   const session = await auth();
- *   
- *   if (!session) {
- *     return NextResponse.json(
- *       { error: 'Non authentifié' },
- *       { status: 401 }
- *     );
- *   }
- *   
- *   if (session.user.role !== 'ADMIN') {
- *     return NextResponse.json(
- *       { error: 'Accès refusé' },
- *       { status: 403 }
- *     );
- *   }
- *   
- *   return NextResponse.json({ data: 'Protected data' });
- * }
- * ```
- */
+  secret: process.env.NEXTAUTH_SECRET,
+});
