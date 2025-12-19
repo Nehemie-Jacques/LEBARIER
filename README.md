@@ -6,6 +6,11 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)](https://www.prisma.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com/)
+[![API](https://img.shields.io/badge/API-v3.0.0-green)](docs/API.md)
+
+**Dernière mise à jour** : 19 Décembre 2025  
+**Version** : 3.0.0  
+**Statut** : 🟢 Backend Core Complet - Frontend en cours
 
 ---
 
@@ -15,12 +20,13 @@
 - [Fonctionnalités](#-fonctionnalités)
 - [Technologies](#️-stack-technologique)
 - [Installation](#-installation)
-- [Structure du projet](#-structure-du-projet-détaillée)
+- [Structure du projet](#-structure-du-projet)
+- [API Documentation](#-api-documentation)
 - [Configuration](#-configuration)
 - [Scripts disponibles](#-scripts-disponibles)
+- [Tests](#-tests)
 - [Déploiement](#-déploiement)
 - [Documentation](#-documentation)
-- [Contribution](#-contribution)
 
 ---
 
@@ -36,11 +42,12 @@
 
 - 🎨 Design premium et responsive
 - ⚡ Performance optimale (Next.js 14 App Router)
-- 🔒 Authentification sécurisée (NextAuth.js)
-- 💳 Paiements multiples (Stripe, Mobile Money)
+- 🔒 Authentification sécurisée (NextAuth v5)
+- 💳 Paiements multiples (Stripe, MTN Mobile Money, Orange Money)
 - 🤖 Assistant IA intégré (OpenAI)
 - 🌍 Multi-langues (FR/EN)
 - 📱 Progressive Web App (PWA)
+- ✅ **API Backend Complète** (CRUD Appointments & Services)
 
 ---
 
@@ -48,16 +55,24 @@
 
 ### 👥 Pour les Clients
 
-#### Réservation de rendez-vous
-- 📅 **Tunnel de réservation en 5 étapes**
+#### Réservation de rendez-vous ✅
+- 📅 **Tunnel de réservation en 6 étapes**
   - Choix du service (coupe, barbe, soin...)
   - Sélection de l'employé préféré
-  - Choix du salon (si multi-sites)
+  - Choix du lieu (Salon ou Domicile +5000 FCFA)
   - Sélection date et heure
+  - Vérification disponibilités en temps réel
   - Paiement et confirmation
 
+#### Gestion des rendez-vous ✅
+- � Liste de tous les rendez-vous
+- 🔍 Filtres par statut (PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED)
+- 📆 Filtres par plage de dates
+- ✏️ Modification de rendez-vous
+- ❌ Annulation avec raison
+- 📊 Statistiques personnelles
+
 #### E-commerce
-- 🛒 **Boutique de produits capillaires**
   - Catalogue complet avec filtres
   - Panier d'achat dynamique
   - Processus de checkout sécurisé

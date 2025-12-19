@@ -1,190 +1,282 @@
-.
-|-- docs
-|   |-- API.md
-|   |-- ARCHITECTURE.md
-|   |-- CONTRIBUTING.md
-|   `-- DEPLOYMENT.md
-|-- GETTING_STARTED.md
-|-- prettier.config.js
-|-- prisma
-|   |-- migrations
-|   |-- schema.prisma
-|   `-- seed.ts
-|-- public
-|   |-- fonts
-|   |-- icons
-|   `-- images
-|       |-- hero
-|       |-- logo.svg
-|       |-- services
-|       `-- team
-|-- README.md
-|-- scripts
-|   |-- backup-db.sh
-|   |-- deploy.sh
-|   `-- seed-db.ts
-|-- src
-|   |-- app
-|   |   |-- admin
-|   |   |   |-- analytics
-|   |   |   |-- appointments
-|   |   |   |-- content
-|   |   |   |-- employees
-|   |   |   |-- layout.tsx
-|   |   |   |-- marketing
-|   |   |   |-- orders
-|   |   |   |-- page.tsx
-|   |   |   |-- products
-|   |   |   |-- reviews
-|   |   |   |-- services
-|   |   |   |-- settings
-|   |   |   `-- users
-|   |   |-- api
-|   |   |   |-- appointments
-|   |   |   |-- auth
-|   |   |   |-- chatbot
-|   |   |   |-- employees
-|   |   |   |-- loyalty
-|   |   |   |-- notifications
-|   |   |   |-- orders
-|   |   |   |-- payments
-|   |   |   |-- products
-|   |   |   |-- reviews
-|   |   |   |-- services
-|   |   |   |-- upload
-|   |   |   `-- webhooks
-|   |   |-- (auth)
-|   |   |   |-- forgot-password
-|   |   |   |-- login
-|   |   |   |-- register
-|   |   |   `-- verify-email
-|   |   |-- booking
-|   |   |   |-- confirmation
-|   |   |   |-- datetime
-|   |   |   |-- employee
-|   |   |   |-- location
-|   |   |   |-- page.tsx
-|   |   |   `-- payment
-|   |   |-- employee
-|   |   |   |-- appointments
-|   |   |   |-- layout.tsx
-|   |   |   |-- page.tsx
-|   |   |   |-- portfolio
-|   |   |   |-- schedule
-|   |   |   `-- stats
-|   |   |-- error.tsx
-|   |   |-- layout.tsx
-|   |   |-- loading.tsx
-|   |   |-- (main)
-|   |   |   |-- about
-|   |   |   |-- blog
-|   |   |   |-- contact
-|   |   |   |-- gallery
-|   |   |   |-- layout.tsx
-|   |   |   |-- services
-|   |   |   `-- team
-|   |   |-- not-found.tsx
-|   |   |-- page.tsx
-|   |   |-- profile
-|   |   |   |-- appointments
-|   |   |   |-- favorites
-|   |   |   |-- layout.tsx
-|   |   |   |-- loyalty
-|   |   |   |-- orders
-|   |   |   |-- page.tsx
-|   |   |   `-- settings
-|   |   `-- shop
-|   |       |-- cart
-|   |       |-- checkout
-|   |       |-- page.tsx
-|   |       `-- [slug]
-|   |-- components
-|   |   |-- admin
-|   |   |   |-- AdminSidebar.tsx
-|   |   |   `-- DashboardStats.tsx
-|   |   |-- booking
-|   |   |   |-- BookingStepper.tsx
-|   |   |   |-- EmployeeSelector.tsx
-|   |   |   `-- ServiceSelector.tsx
-|   |   |-- chatbot
-|   |   |   `-- ChatWidget.tsx
-|   |   |-- common
-|   |   |   |-- ErrorBoundary.tsx
-|   |   |   `-- LoadingSpinner.tsx
-|   |   |-- home
-|   |   |   |-- HeroSection.tsx
-|   |   |   |-- ServicesGrid.tsx
-|   |   |   `-- TeamCarousel.tsx
-|   |   |-- layout
-|   |   |   |-- Breadcrumb.tsx
-|   |   |   |-- Footer.tsx
-|   |   |   |-- Header.tsx
-|   |   |   |-- MobileMenu.tsx
-|   |   |   `-- Sidebar.tsx
-|   |   |-- notifications
-|   |   |   `-- NotificationBell.tsx
-|   |   |-- profile
-|   |   |   `-- ProfileSidebar.tsx
-|   |   |-- reviews
-|   |   |   `-- ReviewCard.tsx
-|   |   |-- services
-|   |   |   `-- ServiceCard.tsx
-|   |   |-- shop
-|   |   |   |-- CartDrawer.tsx
-|   |   |   `-- ProductCard.tsx
-|   |   |-- team
-|   |   |   `-- EmployeeCard.tsx
-|   |   `-- ui
-|   |       |-- button.tsx
-|   |       |-- card.tsx
-|   |       |-- dialog.tsx
-|   |       `-- input.tsx
-|   |-- hooks
-|   |   |-- useAuth.ts
-|   |   |-- useBooking.ts
-|   |   `-- useCart.ts
-|   |-- i18n
-|   |   |-- config.ts
-|   |   |-- locales
-|   |   |   |-- en.json
-|   |   |   `-- fr.json
-|   |   `-- utils.ts
-|   |-- lib
-|   |   |-- analytics
-|   |   |   `-- google-analytics.ts
-|   |   |-- auth.ts
-|   |   |-- chatbot
-|   |   |   `-- openai.ts
-|   |   |-- constants.ts
-|   |   |-- email
-|   |   |   |-- sendgrid.ts
-|   |   |   `-- templates
-|   |   |-- payments
-|   |   |   |-- momo.ts
-|   |   |   |-- orange-money.ts
-|   |   |   `-- stripe.ts
-|   |   |-- prisma.ts
-|   |   |-- sms
-|   |   |   `-- twilio.ts
-|   |   |-- storage
-|   |   |   `-- s3.ts
-|   |   |-- utils.ts
-|   |   `-- validations.ts
-|   |-- store
-|   |   |-- authStore.ts
-|   |   |-- bookingStore.ts
-|   |   `-- cartStore.ts
-|   |-- styles
-|   |   `-- globals.css
-|   `-- types
-|       |-- api.ts
-|       |-- global.d.ts
-|       `-- models.ts
-|-- STRUCTURE.md
-|-- tests
-|   |-- e2e
-|   |-- integration
-|   `-- unit
-`-- TREE.txt
+src/
+├── app/
+│   ├── admin/                          # 👑 Espace Administration
+│   │   ├── analytics/page.tsx
+│   │   ├── appointments/page.tsx
+│   │   ├── content/page.tsx
+│   │   ├── employees/page.tsx
+│   │   ├── layout.tsx
+│   │   ├── marketing/page.tsx
+│   │   ├── orders/page.tsx
+│   │   ├── page.tsx
+│   │   ├── products/page.tsx
+│   │   ├── reviews/page.tsx
+│   │   ├── services/page.tsx
+│   │   ├── settings/page.tsx
+│   │   └── users/page.tsx
+│   │
+│   ├── api/                            # 🔌 API Backend Routes
+│   │   ├── admin/
+│   │   │   └── users/route.ts          # ✅ CRUD utilisateurs (ADMIN)
+│   │   ├── appointments/
+│   │   │   ├── availability/route.ts   # ✅ Vérification disponibilités (8h-18h)
+│   │   │   ├── cancel/route.ts         # Annulation rendez-vous
+│   │   │   ├── [id]/route.ts           # ✅ GET, PUT, DELETE par ID
+│   │   │   └── route.ts                # ✅ GET (liste + filtres), POST (créer)
+│   │   ├── auth/
+│   │   │   ├── login/route.ts
+│   │   │   ├── logout/route.ts
+│   │   │   ├── [...nextauth]/route.ts  # NextAuth handler
+│   │   │   ├── register/route.ts       # ✅ acceptTerms requis
+│   │   │   └── reset-password/route.ts
+│   │   ├── chatbot/route.ts            # AI Assistant
+│   │   ├── employee/
+│   │   │   └── appointments/route.ts   # ✅ Rendez-vous employé
+│   │   ├── employees/
+│   │   │   ├── [id]/route.ts
+│   │   │   └── route.ts
+│   │   ├── loyalty/
+│   │   │   ├── points/route.ts
+│   │   │   └── rewards/route.ts
+│   │   ├── notifications/
+│   │   │   ├── mark-read/route.ts
+│   │   │   └── send/route.ts
+│   │   ├── orders/
+│   │   │   ├── [id]/route.ts
+│   │   │   └── route.ts
+│   │   ├── payments/
+│   │   │   ├── momo/
+│   │   │   │   ├── callback/
+│   │   │   │   └── initiate/
+│   │   │   ├── orange-money/
+│   │   │   │   ├── callback/
+│   │   │   │   └── initiate/
+│   │   │   └── stripe/
+│   │   │       ├── intent/
+│   │   │       └── webhook/
+│   │   ├── products/
+│   │   │   ├── [id]/route.ts
+│   │   │   └── route.ts
+│   │   ├── reviews/
+│   │   │   ├── [id]/route.ts
+│   │   │   └── route.ts
+│   │   ├── services/
+│   │   │   ├── [id]/route.ts           # ✅ GET (public), PUT, DELETE (ADMIN)
+│   │   │   └── route.ts                # ✅ GET (liste + stats), POST (ADMIN)
+│   │   ├── upload/route.ts
+│   │   ├── user/
+│   │   │   └── profile/route.ts        # ✅ GET, PUT profil
+│   │   └── webhooks/
+│   │       ├── analytics/route.ts
+│   │       └── n8n/route.ts
+│   │
+│   ├── (auth)/                         # 🔐 Pages Authentification
+│   │   ├── forgot-password/page.tsx
+│   │   ├── login/
+│   │   │   ├── actions.ts
+│   │   │   └── page.tsx
+│   │   ├── register/page.tsx
+│   │   ├── reset-password/page.tsx
+│   │   └── verify-email/page.tsx
+│   │
+│   ├── booking/                        # 📅 Système de Réservation (6 étapes)
+│   │   ├── confirmation/page.tsx
+│   │   ├── datetime/page.tsx
+│   │   ├── employee/page.tsx
+│   │   ├── location/page.tsx           # SALON ou HOME (+5000 FCFA)
+│   │   ├── page.tsx
+│   │   └── payment/page.tsx
+│   │
+│   ├── employee/                       # 👔 Espace Employé
+│   │   ├── appointments/page.tsx
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── portfolio/page.tsx
+│   │   ├── schedule/page.tsx
+│   │   └── stats/page.tsx
+│   │
+│   ├── (main)/                         # 🏠 Pages Publiques
+│   │   ├── about/page.tsx
+│   │   ├── blog/
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]/page.tsx
+│   │   ├── contact/page.tsx
+│   │   ├── gallery/page.tsx
+│   │   ├── layout.tsx
+│   │   ├── services/
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]/page.tsx
+│   │   └── team/
+│   │       ├── [id]/page.tsx
+│   │       └── page.tsx
+│   │
+│   ├── profile/                        # 👤 Profil Client
+│   │   ├── appointments/page.tsx
+│   │   ├── favorites/page.tsx
+│   │   ├── layout.tsx
+│   │   ├── loyalty/page.tsx
+│   │   ├── orders/page.tsx
+│   │   ├── page.tsx
+│   │   └── settings/page.tsx
+│   │
+│   ├── shop/                           # 🛒 Boutique en Ligne
+│   │   ├── cart/page.tsx
+│   │   ├── checkout/page.tsx
+│   │   ├── page.tsx
+│   │   └── [slug]/page.tsx
+│   │
+│   ├── error.tsx
+│   ├── layout.tsx
+│   ├── loading.tsx
+│   ├── not-found.tsx
+│   └── page.tsx
+│
+├── components/                         # 🧩 Composants React
+│   ├── admin/
+│   │   ├── AdminSidebar.tsx
+│   │   └── DashboardStats.tsx
+│   ├── auth/
+│   │   └── LoginForm.tsx
+│   ├── booking/
+│   │   ├── BookingStepper.tsx
+│   │   ├── EmployeeSelector.tsx
+│   │   └── ServiceSelector.tsx
+│   ├── chatbot/
+│   │   └── ChatWidget.tsx
+│   ├── common/
+│   │   ├── ErrorBoundary.tsx
+│   │   └── LoadingSpinner.tsx
+│   ├── home/
+│   │   ├── CTASection.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── LoyaltySection.tsx
+│   │   ├── ServicesGrid.tsx
+│   │   ├── TeamCarousel.tsx
+│   │   └── TestimonialsCarousel.tsx
+│   ├── layout/
+│   │   ├── Breadcrumb.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Header.tsx
+│   │   ├── MobileMenu.tsx
+│   │   └── Sidebar.tsx
+│   ├── notifications/
+│   │   └── NotificationBell.tsx
+│   ├── profile/
+│   │   └── ProfileSidebar.tsx
+│   ├── reviews/
+│   │   └── ReviewCard.tsx
+│   ├── services/
+│   │   └── ServiceCard.tsx
+│   ├── shop/
+│   │   ├── CartDrawer.tsx
+│   │   └── ProductCard.tsx
+│   ├── team/
+│   │   └── EmployeeCard.tsx
+│   └── ui/                             # shadcn/ui components
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── dialog.tsx
+│       ├── input.tsx
+│       └── label.tsx
+│
+├── hooks/                              # 🪝 Custom React Hooks
+│   ├── useAuth.ts
+│   ├── useBooking.ts
+│   └── useCart.ts
+│
+├── i18n/                               # 🌍 Internationalisation
+│   ├── config.ts
+│   ├── locales/
+│   │   ├── en.json
+│   │   └── fr.json
+│   └── utils.ts
+│
+├── lib/                                # 📚 Bibliothèques & Utilitaires
+│   ├── analytics/
+│   │   └── google-analytics.ts
+│   ├── auth-helpers.ts                 # ✅ requireAuth, requireAdmin
+│   ├── auth.ts                         # ✅ NextAuth v5 config
+│   ├── chatbot/
+│   │   └── openai.ts
+│   ├── constants.ts
+│   ├── email/
+│   │   ├── sendgrid.ts
+│   │   ├── send-password-reset.ts
+│   │   ├── send-welcome.ts
+│   │   └── templates/
+│   │       └── appointment-confirmation.tsx
+│   ├── payments/
+│   │   ├── momo.ts
+│   │   ├── orange-money.ts
+│   │   └── stripe.ts
+│   ├── prisma.ts
+│   ├── sms/
+│   │   └── twilio.ts
+│   ├── storage/
+│   │   └── s3.ts
+│   ├── utils.ts
+│   └── validations.ts
+│
+├── middleware.ts                       # 🛡️ Protection des routes
+│
+├── store/                              # 🗃️ State Management (Zustand)
+│   ├── authStore.ts
+│   ├── bookingStore.ts
+│   └── cartStore.ts
+│
+├── styles/
+│   └── globals.css
+│
+└── types/                              # 📝 TypeScript Definitions
+    ├── api.ts
+    ├── global.d.ts
+    ├── models.ts
+    └── next-auth.d.ts
 
-105 directories, 83 files
+═══════════════════════════════════════════════════════════════
+
+📊 STATISTIQUES DU PROJET
+
+API Endpoints : 40+
+  ├── Authentification : 6 endpoints
+  ├── Appointments (CRUD) : 5 endpoints ✅
+  ├── Services (CRUD) : 5 endpoints ✅
+  ├── Admin : 5 endpoints
+  ├── Employee : 4 endpoints
+  └── Autres : 15+ endpoints
+
+Pages : 50+
+  ├── Admin : 13 pages
+  ├── Auth : 5 pages
+  ├── Booking : 6 pages
+  ├── Employee : 6 pages
+  ├── Profile : 7 pages
+  ├── Shop : 4 pages
+  └── Main : 9+ pages
+
+Composants : 30+
+Hooks : 3
+Modèles DB : 12
+
+═══════════════════════════════════════════════════════════════
+
+✅ BACKEND COMPLET (v3.0.0)
+- Authentification NextAuth v5
+- CRUD Appointments complet
+- CRUD Services complet
+- Admin & Employee management
+- Profile management
+- Collection Postman 40+ tests
+
+⏳ EN COURS
+- Pages admin complètes
+- Système de réservation interactif
+- Boutique en ligne
+- Frontend components
+
+═══════════════════════════════════════════════════════════════
+
+Dernière mise à jour : 19 Décembre 2025
+Version : 3.0.0
+Maintenu par : Nehemie Jacques
