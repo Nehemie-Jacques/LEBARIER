@@ -1,0 +1,584 @@
+{
+  "info": {
+    "name": "LE BARBIER - Tests Backend Complets",
+    "description": "Collection Postman complète pour tester tous les endpoints backend de l'application LE BARBIER",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "2.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentification",
+      "item": [
+        {
+          "name": "1. Register (Inscription)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"Password123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+237600000000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Créer un nouveau compte utilisateur (CLIENT par défaut)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Login - Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/callback/credentials",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "callback", "credentials"]
+            },
+            "description": "Se connecter en tant que CLIENT (même endpoint pour tous les rôles)"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Login - Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"employee@lebarbier.com\",\n  \"password\": \"Employee123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/callback/credentials",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "callback", "credentials"]
+            },
+            "description": "Se connecter en tant que EMPLOYEE (même endpoint, différenciation automatique par rôle)"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Login - Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@lebarbier.com\",\n  \"password\": \"Admin123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/callback/credentials",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "callback", "credentials"]
+            },
+            "description": "Se connecter en tant que ADMIN (même endpoint, différenciation automatique par rôle)"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Get Session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/session",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "session"]
+            },
+            "description": "Récupérer la session actuelle (nécessite d'être connecté)"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            },
+            "description": "Se déconnecter (tous rôles)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints d'authentification - Identiques pour tous les rôles (CLIENT, EMPLOYEE, ADMIN)"
+    },
+    {
+      "name": "👤 Profil Utilisateur (Tous rôles)",
+      "item": [
+        {
+          "name": "1. Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "Récupérer son propre profil (CLIENT, EMPLOYEE ou ADMIN)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\",\n  \"phone\": \"+237611111111\",\n  \"language\": \"FR\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "Modifier son propre profil"
+          },
+          "response": []
+        }
+      ],
+      "description": "Gestion du profil utilisateur - Accessible à tous les utilisateurs connectés"
+    },
+    {
+      "name": "👔 Employé (EMPLOYEE + ADMIN)",
+      "item": [
+        {
+          "name": "1. Get My Appointments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employee/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employee", "appointments"]
+            },
+            "description": "Récupérer tous les rendez-vous de l'employé connecté"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Appointments by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employee/appointments?status=PENDING",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employee", "appointments"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "description": "PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED"
+                }
+              ]
+            },
+            "description": "Filtrer les rendez-vous par statut"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Appointments by Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employee/appointments?date=2024-12-19",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employee", "appointments"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2024-12-19",
+                  "description": "Format: YYYY-MM-DD"
+                }
+              ]
+            },
+            "description": "Filtrer les rendez-vous par date"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Update Appointment Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointmentId\": \"cm...\",\n  \"status\": \"CONFIRMED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employee/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employee", "appointments"]
+            },
+            "description": "Modifier le statut d'un rendez-vous (PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints pour les employés - Accessible aux EMPLOYEE et ADMIN uniquement"
+    },
+    {
+      "name": "👑 Admin (ADMIN uniquement)",
+      "item": [
+        {
+          "name": "1. Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            },
+            "description": "Récupérer tous les utilisateurs (ADMIN uniquement)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Users by Role",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?role=CLIENT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "CLIENT",
+                  "description": "CLIENT, EMPLOYEE, ADMIN"
+                }
+              ]
+            },
+            "description": "Filtrer les utilisateurs par rôle"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Search Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?search=john",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "john",
+                  "description": "Rechercher par nom ou email"
+                }
+              ]
+            },
+            "description": "Rechercher des utilisateurs"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Get Active Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?isActive=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "description": "true ou false"
+                }
+              ]
+            },
+            "description": "Filtrer par statut actif/inactif"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemployee@lebarbier.com\",\n  \"password\": \"SecurePass123!\",\n  \"firstName\": \"Marie\",\n  \"lastName\": \"Dupont\",\n  \"phone\": \"+237622222222\",\n  \"role\": \"EMPLOYEE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            },
+            "description": "Créer un nouvel utilisateur avec n'importe quel rôle (ADMIN uniquement)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints d'administration - Accessible aux ADMIN uniquement"
+    },
+    {
+      "name": "📋 Rendez-vous (Clients)",
+      "item": [
+        {
+          "name": "1. Create Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"cm...\",\n  \"serviceId\": \"cm...\",\n  \"date\": \"2024-12-20T10:00:00Z\",\n  \"endTime\": \"2024-12-20T11:00:00Z\",\n  \"location\": \"SALON\",\n  \"notes\": \"Coupe classique\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments"]
+            },
+            "description": "Créer un rendez-vous (CLIENT)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get My Appointments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments"]
+            },
+            "description": "Récupérer mes rendez-vous (CLIENT)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Gestion des rendez-vous pour les clients"
+    },
+    {
+      "name": "💇 Services",
+      "item": [
+        {
+          "name": "1. Get All Services",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services"]
+            },
+            "description": "Récupérer tous les services disponibles (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Service by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/services/[id]",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services", "[id]"]
+            },
+            "description": "Récupérer un service spécifique"
+          },
+          "response": []
+        }
+      ],
+      "description": "Consultation des services - Accessible à tous"
+    },
+    {
+      "name": "👥 Employés (Public)",
+      "item": [
+        {
+          "name": "1. Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees"]
+            },
+            "description": "Récupérer la liste des employés (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Employee Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/[id]/availability?date=2024-12-20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "[id]", "availability"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2024-12-20"
+                }
+              ]
+            },
+            "description": "Vérifier la disponibilité d'un employé"
+          },
+          "response": []
+        }
+      ],
+      "description": "Informations sur les employés - Accessible à tous"
+    },
+    {
+      "name": "🧪 Tests de Protection",
+      "item": [
+        {
+          "name": "Test 1: Client accède à route employé (DOIT ÉCHOUER)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employee/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employee", "appointments"]
+            },
+            "description": "Un CLIENT ne doit PAS pouvoir accéder aux routes employés → Attendu: 403 Forbidden"
+          },
+          "response": []
+        },
+        {
+          "name": "Test 2: Client accède à route admin (DOIT ÉCHOUER)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            },
+            "description": "Un CLIENT ne doit PAS pouvoir accéder aux routes admin → Attendu: 403 Forbidden"
+          },
+          "response": []
+        },
+        {
+          "name": "Test 3: Employee accède à route admin (DOIT ÉCHOUER)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            },
+            "description": "Un EMPLOYEE ne doit PAS pouvoir accéder aux routes admin → Attendu: 403 Forbidden"
+          },
+          "response": []
+        },
+        {
+          "name": "Test 4: Sans connexion (DOIT ÉCHOUER)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "Sans être connecté, ne doit PAS accéder aux routes protégées → Attendu: 401 Unauthorized"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests pour vérifier que la protection des routes fonctionne correctement"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Script exécuté avant chaque requête",
+          "console.log('🚀 Requête vers:', pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Tests automatiques après chaque requête",
+          "pm.test('Response time is less than 5000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});",
+          "",
+          "pm.test('Response has valid JSON', function () {",
+          "    pm.response.to.have.jsonBody();",
+          "});"
+        ]
+      }
+    }
+  ]
+}
