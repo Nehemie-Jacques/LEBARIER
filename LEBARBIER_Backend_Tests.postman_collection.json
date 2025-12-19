@@ -3,7 +3,7 @@
     "name": "LE BARBIER - Tests Backend Complets",
     "description": "Collection Postman complète pour tester tous les endpoints backend de l'application LE BARBIER",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "version": "2.0.0"
+    "version": "3.0.0"
   },
   "variable": [
     {
@@ -28,7 +28,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"Password123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+237600000000\"\n}"
+              "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"Password123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+237600000000\",\n  \"acceptTerms\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/register",
@@ -374,10 +374,71 @@
       "description": "Endpoints d'administration - Accessible aux ADMIN uniquement"
     },
     {
-      "name": "📋 Rendez-vous (Clients)",
+      "name": "� Rendez-vous - CRUD Complet",
       "item": [
         {
-          "name": "1. Create Appointment",
+          "name": "1. Get My Appointments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments"]
+            },
+            "description": "Récupérer tous mes rendez-vous avec statistiques par statut"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Appointments - Filter by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments?status=PENDING",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "description": "PENDING | CONFIRMED | IN_PROGRESS | COMPLETED | CANCELLED"
+                }
+              ]
+            },
+            "description": "Filtrer les rendez-vous par statut"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Appointments - Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments?startDate=2024-12-01&endDate=2024-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2024-12-01",
+                  "description": "Format: YYYY-MM-DD"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-12-31",
+                  "description": "Format: YYYY-MM-DD"
+                }
+              ]
+            },
+            "description": "Filtrer par plage de dates"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Create Appointment",
           "request": {
             "method": "POST",
             "header": [
@@ -388,36 +449,122 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"employeeId\": \"cm...\",\n  \"serviceId\": \"cm...\",\n  \"date\": \"2024-12-20T10:00:00Z\",\n  \"endTime\": \"2024-12-20T11:00:00Z\",\n  \"location\": \"SALON\",\n  \"notes\": \"Coupe classique\"\n}"
+              "raw": "{\n  \"employeeId\": \"cm...\",\n  \"serviceId\": \"cm...\",\n  \"date\": \"2024-12-20T10:00:00Z\",\n  \"endTime\": \"2024-12-20T11:00:00Z\",\n  \"location\": \"SALON\",\n  \"notes\": \"Coupe classique + taille barbe\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/appointments",
               "host": ["{{baseUrl}}"],
               "path": ["api", "appointments"]
             },
-            "description": "Créer un rendez-vous (CLIENT)"
+            "description": "Créer un nouveau rendez-vous. Location: SALON ou HOME (HOME ajoute 5000 FCFA de frais)"
           },
           "response": []
         },
         {
-          "name": "2. Get My Appointments",
+          "name": "5. Get Appointment by ID",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/appointments",
+              "raw": "{{baseUrl}}/api/appointments/cm...",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "appointments"]
+              "path": ["api", "appointments", "cm..."]
             },
-            "description": "Récupérer mes rendez-vous (CLIENT)"
+            "description": "Récupérer un rendez-vous spécifique (propriétaire ou admin seulement)"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Update Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"notes\": \"Notes mises à jour\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments", "cm..."]
+            },
+            "description": "Modifier un rendez-vous (statut, notes, raison annulation)"
+          },
+          "response": []
+        },
+        {
+          "name": "7. Cancel Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CANCELLED\",\n  \"cancellationReason\": \"Client a changé d'avis\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments", "cm..."]
+            },
+            "description": "Annuler un rendez-vous avec raison"
+          },
+          "response": []
+        },
+        {
+          "name": "8. Delete Appointment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments", "cm..."]
+            },
+            "description": "Supprimer définitivement un rendez-vous (propriétaire ou admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "9. Check Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointments/availability?employeeId=cm...&date=2024-12-20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointments", "availability"],
+              "query": [
+                {
+                  "key": "employeeId",
+                  "value": "cm...",
+                  "description": "ID de l'employé"
+                },
+                {
+                  "key": "date",
+                  "value": "2024-12-20",
+                  "description": "Date (YYYY-MM-DD)"
+                }
+              ]
+            },
+            "description": "Vérifier les créneaux disponibles d'un employé (8h-18h, créneaux horaires)"
           },
           "response": []
         }
       ],
-      "description": "Gestion des rendez-vous pour les clients"
+      "description": "CRUD complet des rendez-vous - GET (liste + filtres), POST (créer), GET by ID, PUT (modifier), DELETE (supprimer), Availability (disponibilités)"
     },
     {
-      "name": "💇 Services",
+      "name": "� Services - CRUD Complet",
       "item": [
         {
           "name": "1. Get All Services",
@@ -429,7 +576,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "services"]
             },
-            "description": "Récupérer tous les services disponibles (public)"
+            "description": "Récupérer tous les services actifs avec statistiques par catégorie (PUBLIC)"
           },
           "response": []
         },
@@ -439,16 +586,99 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/services/[id]",
+              "raw": "{{baseUrl}}/api/services/cm...",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "services", "[id]"]
+              "path": ["api", "services", "cm..."]
             },
-            "description": "Récupérer un service spécifique"
+            "description": "Récupérer un service spécifique par son ID (PUBLIC)"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Create Service (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Coupe Premium\",\n  \"description\": \"Coupe de cheveux premium avec shampoing et massage\",\n  \"price\": 15000,\n  \"duration\": 60,\n  \"category\": \"COUPE\",\n  \"imageUrl\": \"https://example.com/coupe-premium.jpg\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services"]
+            },
+            "description": "Créer un nouveau service (ADMIN uniquement). Categories: COUPE, BARBE, COLORATION, SOIN, COMBO"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Update Service (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Coupe Premium Updated\",\n  \"price\": 18000,\n  \"duration\": 75,\n  \"description\": \"Description mise à jour\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/services/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services", "cm..."]
+            },
+            "description": "Modifier un service existant (ADMIN uniquement)"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Deactivate Service (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/services/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services", "cm..."]
+            },
+            "description": "Désactiver un service (soft delete - ADMIN uniquement)"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Delete Service (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/services/cm...",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "services", "cm..."]
+            },
+            "description": "Supprimer définitivement un service (ADMIN uniquement - DANGER)"
           },
           "response": []
         }
       ],
-      "description": "Consultation des services - Accessible à tous"
+      "description": "CRUD complet des services - GET (public), POST/PUT/DELETE (ADMIN uniquement)"
     },
     {
       "name": "👥 Employés (Public)",
