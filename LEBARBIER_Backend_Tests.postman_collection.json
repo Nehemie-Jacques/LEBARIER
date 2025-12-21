@@ -781,6 +781,173 @@
         }
       ],
       "description": "Tests pour vérifier que la protection des routes fonctionne correctement"
+    },
+    {
+      "name": "🛍️ Orders (Commandes)",
+      "item": [
+        {
+          "name": "1. List Orders (Admin/User)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Lister les commandes (ADMIN voit toutes, USER voit les siennes)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create Order (Client)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [{ \"productId\": \"prod_123\", \"quantity\": 2 }],\n  \"shippingAddress\": { \"line1\": \"Rue X\", \"city\": \"Yaounde\" },\n  \"paymentMethod\": \"CARD\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"] },
+            "description": "Créer une commande (CLIENT)"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Order by ID",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/orders/{{orderId}}", "host": ["{{baseUrl}}"], "path": ["api", "orders", "{{orderId}}"] }, "description": "Détails d'une commande par ID" },
+          "response": []
+        }
+      ],
+      "description": "CRUD commandes: liste, création, détail, mise à jour, annulation"
+    },
+    {
+      "name": "⭐ Reviews (Avis)",
+      "item": [
+        {
+          "name": "1. List Reviews",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/reviews?page=1", "host": ["{{baseUrl}}"], "path": ["api", "reviews"], "query": [ { "key": "page", "value": "1" } ] }, "description": "Lister avis (filtrables)" },
+          "response": []
+        },
+        {
+          "name": "2. Create Review (Client after appointment)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"appointmentId\": \"appt_123\",\n  \"rating\": 5,\n  \"comment\": \"Excellent service\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/reviews", "host": ["{{baseUrl}}"], "path": ["api", "reviews"] },
+            "description": "Créer un avis lié à un rendez-vous (CLIENT)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Gestion des avis - création, lecture, modération"
+    },
+    {
+      "name": "🔔 Notifications (Email & SMS)",
+      "item": [
+        {
+          "name": "1. List My Notifications",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/notifications?limit=20", "host": ["{{baseUrl}}"], "path": ["api", "notifications"], "query": [ { "key": "limit", "value": "20" } ] }, "description": "Lister les notifications pour l'utilisateur connecté" },
+          "response": []
+        },
+        {
+          "name": "2. Send Email Notification (Admin - persist)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"to\": \"user@example.com\",\n  \"subject\": \"Test Email\",\n  \"body\": \"Ceci est un email de test\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/notifications/email", "host": ["{{baseUrl}}"], "path": ["api", "notifications", "email"] },
+            "description": "Enregistrer et (optionnel) envoyer un email via le système (ADMIN)"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Send SMS Notification (Admin - persist)",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"to\": \"+237600000000\",\n  \"message\": \"SMS de test\"\n}" }, "url": { "raw": "{{baseUrl}}/api/notifications/sms", "host": ["{{baseUrl}}"], "path": ["api", "notifications", "sms"] }, "description": "Enregistrer et (optionnel) envoyer un SMS via le système (ADMIN)" },
+          "response": []
+        }
+      ],
+      "description": "Endpoints pour persister et lister notifications (EMAIL / SMS)"
+    },
+    {
+      "name": "💎 Loyalty (Points & Rewards)",
+      "item": [
+        {
+          "name": "1. Get My Points Balance",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/loyalty/points", "host": ["{{baseUrl}}"], "path": ["api", "loyalty", "points"] }, "description": "Récupérer le solde de points et les transactions" },
+          "response": []
+        },
+        {
+          "name": "2. Redeem Points (Client)",
+          "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"points\": 1000,\n  \"reason\": \"Réduction commande\"\n}" }, "url": { "raw": "{{baseUrl}}/api/loyalty/points", "host": ["{{baseUrl}}"], "path": ["api", "loyalty", "points"] }, "description": "Utiliser des points (CLIENT)" },
+          "response": []
+        },
+        {
+          "name": "3. List Rewards (Public)",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/loyalty/rewards", "host": ["{{baseUrl}}"], "path": ["api", "loyalty", "rewards"] }, "description": "Lister les récompenses disponibles" },
+          "response": []
+        }
+      ],
+      "description": "Gestion du programme de fidélité"
+    },
+    {
+      "name": "🔗 Webhooks",
+      "item": [
+        {
+          "name": "1. Stripe Webhook (simulate)",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"type\": \"payment_intent.succeeded\",\n  \"data\": { \"object\": { \"id\": \"pi_123\", \"metadata\": { \"orderId\": \"order_123\" } } }\n}" }, "url": { "raw": "{{baseUrl}}/api/webhooks/stripe", "host": ["{{baseUrl}}"], "path": ["api", "webhooks", "stripe"] }, "description": "Simuler un événement Stripe vers le webhook" },
+          "response": []
+        },
+        {
+          "name": "2. SendGrid Webhook (simulate)",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "[{ \"email\": \"user@example.com\", \"event\": \"processed\" }]" }, "url": { "raw": "{{baseUrl}}/api/webhooks/sendgrid", "host": ["{{baseUrl}}"], "path": ["api", "webhooks", "sendgrid"] }, "description": "Simuler un webhook SendGrid" },
+          "response": []
+        }
+      ],
+      "description": "Points d'entrée pour webhooks externes"
+    },
+    {
+      "name": "💳 Payments (Stubs)",
+      "item": [
+        {
+          "name": "1. Create Stripe Payment Intent (Stub)",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"orderId\": \"order_123\",\n  \"amount\": 25000,\n  \"currency\": \"XAF\"\n}" }, "url": { "raw": "{{baseUrl}}/api/payments/stripe", "host": ["{{baseUrl}}"], "path": ["api", "payments", "stripe"] }, "description": "Créer un paiement Stripe (stub)" },
+          "response": []
+        },
+        {
+          "name": "2. Orange Money Payment (Stub)",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"orderId\": \"order_123\",\n  \"amount\": 25000\n}" }, "url": { "raw": "{{baseUrl}}/api/payments/orange-money", "host": ["{{baseUrl}}"], "path": ["api", "payments", "orange-money"] }, "description": "Créer une demande de paiement Orange Money (stub)" },
+          "response": []
+        }
+      ],
+      "description": "Stubs pour tester l'API de paiement"
+    },
+    {
+      "name": "🤖 Chatbot (OpenAI Placeholder)",
+      "item": [
+        {
+          "name": "1. Ask Chatbot",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"prompt\": \"Bonjour, quels sont vos horaires aujourd'hui ?\"\n}" }, "url": { "raw": "{{baseUrl}}/api/chatbot", "host": ["{{baseUrl}}"], "path": ["api", "chatbot"] }, "description": "Interroger le chatbot (placeholder)" },
+          "response": []
+        }
+      ],
+      "description": "Endpoint conversationnel (OpenAI placeholder)"
+    },
+    {
+      "name": "📤 Upload (S3 Presign Stub)",
+      "item": [
+        {
+          "name": "1. Get Presigned URL",
+          "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"fileName\": \"image.jpg\",\n  \"fileType\": \"image/jpeg\"\n}" }, "url": { "raw": "{{baseUrl}}/api/upload/presign", "host": ["{{baseUrl}}"], "path": ["api", "upload", "presign"] }, "description": "Obtenir une URL pré-signée pour upload (stub)" },
+          "response": []
+        }
+      ],
+      "description": "Endpoints d'upload (S3 presign stub)"
     }
   ],
   "event": [
