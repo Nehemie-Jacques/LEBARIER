@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display, Montserrat } from 'next/font/google';
 import { Toaster } from 'sonner'; // TODO: Installer sonner avec npm install sonner
+import ThemeProvider from '@/components/providers/ThemeProvider';
 import '@/styles/globals.css';
 
 // Fonts
@@ -120,8 +121,10 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {/* Main Content */}
-        {children}
+        <ThemeProvider>
+          {/* Main Content */}
+          {children}
+        </ThemeProvider>
 
         {/* Toast Notifications - TODO: Décommenter après installation de sonner */}
         {/* <Toaster

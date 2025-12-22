@@ -2,6 +2,167 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Global CSS variables and theme tokens for LE BARBIER.
+  - Uses HSL tokens referenced by tailwind.config.ts (eg. hsl(var(--background)))
+  - Dark mode is driven by the `.dark` class on <html> (next-themes with attribute="class")
+*/
+
+@layer base {
+  :root {
+    /* Color tokens (H S L) - light mode */
+    --background: 0 0% 100%;
+    /* white */
+    --foreground: 220 9% 12%;
+    /* near-black */
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 9% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 9% 12%;
+
+    /* Primary (gold) - keep in H S L to allow opacity via hsl(...) */
+    --primary: 44 31% 58%;
+    /* approx #C9A961 */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 220 9% 12%;
+
+    --muted: 220 9% 96%;
+    --muted-foreground: 220 9% 45%;
+
+    --accent: 220 9% 96%;
+    --accent-foreground: 220 9% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 9% 89.8%;
+    --input: 220 9% 94%;
+    --ring: 44 31% 58%;
+
+    /* Radii & sizes */
+    --radius: 0.5rem;
+    --container-max-width: 1200px;
+
+    /* Typography scales (rem) */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+
+    /* Elevation tokens (shadow color reference) */
+    --shadow-subtle: 0 4px 6px rgba(10, 10, 10, 0.04);
+
+    /* Breakpoints (for reference in CSS when needed) */
+    --bp-sm: 640px;
+    --bp-md: 768px;
+    --bp-lg: 1024px;
+  }
+
+  /* Dark theme: toggle by adding `.dark` on <html> */
+  .dark {
+    --background: 220 9% 12%;
+    /* near-black */
+    --foreground: 0 0% 98%;
+    /* white */
+
+    --card: 220 9% 18%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 9% 16%;
+    --popover-foreground: 0 0% 98%;
+
+    /* primary stays similar to keep brand color */
+    --primary: 44 31% 58%;
+    --primary-foreground: 220 9% 12%;
+
+    --secondary: 220 9% 25%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 9% 25%;
+    --muted-foreground: 220 9% 63%;
+
+    --accent: 220 9% 25%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 9% 25%;
+    --input: 220 9% 20%;
+    --ring: 44 31% 58%;
+  }
+
+  /* Base resets that rely on tokens above */
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] antialiased;
+    font-feature-settings: "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Default containers and elements */
+  .container {
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Inputs and buttons using tokens */
+  input,
+  textarea,
+  select {
+    background: hsl(var(--input));
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Link defaults */
+  a {
+    color: hsl(var(--primary));
+    text-decoration: none;
+  }
+
+  /* Utility to surface token values in CSS when needed */
+  .bg-token-primary {
+    background-color: hsl(var(--primary));
+  }
+
+  .text-token-primary {
+    color: hsl(var(--primary));
+  }
+
+}
+
+@layer utilities {
+
+  /* Small helper utilities that complement tailwind tokens */
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .radius-lg {
+    border-radius: var(--radius);
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================
    VARIABLES CSS PREMIUM
    ============================================ */
