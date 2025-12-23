@@ -1,3 +1,4 @@
+"use client";
 import { Scissors } from 'lucide-react';
 
 export default function Loading() {
