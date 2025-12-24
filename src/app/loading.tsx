@@ -39,19 +39,29 @@ export default function Loading() {
         " />
       </div>
 
-      {/* Nom de l'application */}
-      <h1 className="
+      <div className="flex flex-col items-center mb-8">
+
+        {/* Nom de l'application */}
+        <h1 className="
         text-3xl font-serif font-bold
         text-charcoal-900 dark:text-cream-50
-        mb-6
+        mb-3
         tracking-wider
       ">
-        LE BARBIER
-      </h1>
+          LE BARBIER
+        </h1>
+
+        <div className="
+        w-12 h-0.5 mb-6
+        bg-gold-400 dark:bg-gold-600
+        rounded-full
+      "></div>
+
+      </div>
 
       {/* Barre de progression */}
       <div className="
-        w-48 h-1
+        w-80 h-1
         bg-cream-200 dark:bg-charcoal-800
         rounded-full
         overflow-hidden
