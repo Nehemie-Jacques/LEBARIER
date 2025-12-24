@@ -6,7 +6,7 @@ export default function Loading() {
     <div className="
       fixed inset-0 z-50
       flex flex-col items-center justify-center
-      bg-cream-50 dark:bg-charcoal-950
+      bg-cream-50 dark:bg-[#1a1a14]
       transition-colors duration-300
     ">
       {/* Logo avec animation */}
@@ -15,8 +15,8 @@ export default function Loading() {
         <div className="
           w-24 h-24
           rounded-full
-          bg-white dark:bg-charcoal-900
-          border-2 border-gold-200 dark:border-gold-800
+          bg-white dark:bg-[#2a2a20]
+          border-2 border-gold-200 dark:border-gold-600
           flex items-center justify-center
           shadow-lg dark:shadow-gold-lg
           animate-pulse
@@ -91,7 +91,7 @@ export default function Loading() {
         text-xs
         text-charcoal-400 dark:text-cream-500
       ">
-        © 2024 LE BARBIER. v1.0
+        © 2025  LE BARBIER. v1.0
       </p>
 
       {/* Animation CSS personnalisée */}
