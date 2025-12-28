@@ -10,13 +10,13 @@ export default function VerifyEmailLightPage() {
 
   const handleResendEmail = async () => {
     setIsResending(true);
-    
+
     // Simulation d'envoi d'email
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     setIsResending(false);
     setResendSuccess(true);
-    
+
     // Réinitialiser le message de succès après 3 secondes
     setTimeout(() => setResendSuccess(false), 3000);
   };
@@ -29,8 +29,8 @@ export default function VerifyEmailLightPage() {
           <Link href="/" className="flex items-center gap-3">
             <div className="w-8 h-8 flex items-center justify-center">
               <svg className="w-6 h-6 text-gold-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.3"/>
-                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.3" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <span className="text-xl font-serif font-bold text-charcoal-950 tracking-wide">

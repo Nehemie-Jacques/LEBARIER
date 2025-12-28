@@ -9,7 +9,7 @@ export default function TestVerifyDark() {
   useEffect(() => {
     // Forcer le mode sombre
     document.documentElement.classList.add('dark');
-    
+
     // Rediriger vers la page verify-email
     setTimeout(() => {
       router.push('/verify-email');
