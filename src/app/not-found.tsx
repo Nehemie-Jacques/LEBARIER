@@ -1,37 +1,73 @@
+'use client';
+
 import Link from 'next/link';
-import { Scissors, Home, Calendar, ShoppingBag } from 'lucide-react';
+import { Scissors, Home, Calendar, ShoppingBag, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export default function NotFound() {
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Eviter l'hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 dark:bg-charcoal-950">
+      {/* Debug theme button - Temporary */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <span className="text-xs text-charcoal-600 dark:text-cream-400">
+          Thème: {currentTheme} {theme === 'system' && '(auto)'}
+        </span>
+        <button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="p-2 bg-gold-500 text-charcoal-950 rounded-full hover:bg-gold-600 transition-colors"
+        >
+          {currentTheme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
+        <button
+          onClick={() => setTheme('system')}
+          className="px-3 py-1 bg-charcoal-800 text-cream-50 text-xs rounded-full hover:bg-charcoal-700 transition-colors"
+        >
+          Auto
+        </button>
+      </div>
       {/* Header */}
       <header className="w-full px-6 md:px-12 py-4 bg-white dark:bg-charcoal-950 border-b border-cream-200 dark:border-charcoal-800">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <Scissors className="w-6 h-6 text-gold-500" />
-            <span className="text-xl font-serif font-bold text-charcoal-950 tracking-wide">
+            <Scissors className="w-10 h-10 text-gold-500" />
+            <span className="text-xl font-serif font-bold text-charcoal-900 tracking-wide">
               LE BARBIER
             </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-sm text-charcoal-700 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
+            <Link href="/" className="text-sm text-charcoal-800 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
               Accueil
             </Link>
-            <Link href="/services" className="text-sm text-charcoal-700 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
+            <Link href="/services" className="text-sm text-charcoal-800 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
               Services
             </Link>
-            <Link href="/about" className="text-sm text-charcoal-700 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
+            <Link href="/about" className="text-sm text-charcoal-800 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
               À Propos
             </Link>
-            <Link href="/contact" className="text-sm text-charcoal-700 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
+            <Link href="/contact" className="text-sm text-charcoal-800 dark:text-cream-200 hover:text-gold-500 dark:hover:text-gold-400 transition-colors">
               Contact
             </Link>
           </nav>
 
           <Link
             href="/booking"
-            className="px-6 py-2 bg-gold-500 hover:bg-gold-600 text-charcoal-950 rounded-full text-sm font-semibold transition-all shadow-lg hover:shadow-xl"
+            className="px-6 py-2 bg-gold-500 hover:bg-gold-600 text-charcoal-900 rounded-full text-sm font-semibold transition-all shadow-lg hover:shadow-xl"
           >
             Réserver
           </Link>
@@ -43,8 +79,8 @@ export default function NotFound() {
         {/* Numéro 404 avec ciseaux en arrière-plan */}
         <div className="relative mb-8">
           {/* Ciseaux en arrière-plan (gris clair) */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-10 dark:opacity-5">
-            <Scissors className="w-64 h-64 text-charcoal-400 dark:text-cream-200 transform rotate-45" />
+          <div className="absolute inset-0 flex items-center justify-center opacity-10 dark:opacity-6">
+            <Scissors className="w-64 h-64 text-charcoal-600 dark:text-cream-200 transform rotate-60" />
           </div>
 
           {/* Numéro 404 */}
@@ -71,16 +107,16 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link
             href="/"
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-600 text-charcoal-950 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl"
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-600 text-charcoal-900 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl"
           >
-            <Home className="w-5 h-5 text-charcoal-950" />
+            <Home className="w-5 h-5 text-charcoal-900" />
             RETOUR À L&apos;ACCUEIL
           </Link>
           <Link
             href="/booking"
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-charcoal-900 border-2 border-charcoal-200 dark:border-charcoal-700 text-charcoal-950 dark:text-cream-50 hover:bg-charcoal-100 dark:hover:bg-charcoal-800 font-semibold rounded-full transition-all"
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-charcoal-900 border-2 border-charcoal-200 dark:border-charcoal-700 text-charcoal-900 dark:text-cream-50 hover:bg-charcoal-100 dark:hover:bg-charcoal-800 font-semibold rounded-full transition-all"
           >
-            <Calendar className="w-5 h-5 text-charcoal-950 dark:text-cream-50" />
+            <Calendar className="w-5 h-5 text-charcoal-900 dark:text-cream-50" />
             PRENDRE RENDEZ-VOUS
           </Link>
         </div>
@@ -144,11 +180,11 @@ export default function NotFound() {
       {/* Footer */}
       <footer className="w-full py-8 px-6 bg-white dark:bg-charcoal-950 border-t border-cream-200 dark:border-charcoal-800">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <Scissors className="w-5 h-5 text-gold-500" />
-              <span className="text-lg font-serif font-bold text-charcoal-950 dark:text-cream-50">
+              <Scissors className="w-10 h-10 text-gold-500" />
+              <span className="text-xl font-serif font-bold text-charcoal-900 dark:text-cream-50">
                 LE BARBIER
               </span>
             </div>

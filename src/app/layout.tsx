@@ -109,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable} ${montserrat.variable}`}>
+    <html lang="fr" className={`${inter.variable} ${playfair.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <head>
         {/* Preload critical fonts */}
         <link
@@ -118,6 +118,23 @@ export default function RootLayout({
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
+        />
+        {/* Script pour initialiser le thème avant le rendu */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme');
+                const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                const appliedTheme = theme === 'system' || !theme ? systemTheme : theme;
+                if (appliedTheme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
         />
       </head>
       <body className="antialiased">
