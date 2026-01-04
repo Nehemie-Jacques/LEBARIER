@@ -3,7 +3,11 @@
 // ============================================
 
 import type { Appointment as PrismaAppointment } from '@prisma/client';
-import { Appointment } from '../../domain/entities/appointment.entity';
+import { Appointment } from '../../../domain';
+import type { 
+  AppointmentStatus, 
+  LocationType 
+} from '@prisma/client';
 
 /**
  * Mapper between Prisma model and Domain entity

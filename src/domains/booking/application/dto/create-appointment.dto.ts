@@ -3,7 +3,7 @@
 // ============================================
 
 import { z } from 'zod';
-import { LocationType } from '@/shared/types/enums';
+import { LocationType } from '@prisma/client';
 
 export const createAppointmentSchema = z.object({
   userId: z.string().min(1, 'User ID is required'),

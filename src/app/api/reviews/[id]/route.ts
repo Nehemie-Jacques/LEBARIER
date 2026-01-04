@@ -33,9 +33,10 @@ export async function GET(
         user: {
           select: {
             id: true,
-            name: true,
+            firstName: true,
+            lastName: true,
             email: true,
-            image: true,
+            avatar: true,
           },
         },
         employee: {
@@ -43,8 +44,9 @@ export async function GET(
             user: {
               select: {
                 id: true,
-                name: true,
-                image: true,
+                firstName: true,
+                lastName: true,
+                avatar: true,
               },
             },
           },
@@ -127,8 +129,9 @@ export async function PUT(
           user: {
             select: {
               id: true,
-              name: true,
-              image: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
             },
           },
           employee: true,
@@ -180,8 +183,9 @@ export async function PUT(
           user: {
             select: {
               id: true,
-              name: true,
-              image: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
             },
           },
         },
@@ -221,8 +225,9 @@ export async function PUT(
         user: {
           select: {
             id: true,
-            name: true,
-            image: true,
+            firstName: true,
+            lastName: true,
+            avatar: true,
           },
         },
         employee: true,

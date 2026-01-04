@@ -2,7 +2,7 @@
 // BOOKING DOMAIN - Appointment Response DTO
 // ============================================
 
-import { AppointmentStatus, LocationType } from '@/shared/types/enums';
+import { AppointmentStatus, LocationType } from '@prisma/client';
 
 export interface AppointmentResponseDTO {
   id: string;

@@ -58,9 +58,10 @@ export async function GET(req: NextRequest) {
           user: {
             select: {
               id: true,
-              name: true,
+              firstName: true,
+              lastName: true,
               email: true,
-              image: true,
+              avatar: true,
             },
           },
           items: {
@@ -224,7 +225,8 @@ export async function POST(req: NextRequest) {
           user: {
             select: {
               id: true,
-              name: true,
+              firstName: true,
+              lastName: true,
               email: true,
             },
           },

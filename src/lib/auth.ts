@@ -56,6 +56,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             firstName: user.firstName,
             lastName: user.lastName,
             phone: user.phone,
+            loyaltyPoints: user.loyaltyPoints,
+            loyaltyTier: user.loyaltyTier,
+            emailVerified: user.emailVerified,
           };
         } catch (error) {
           console.error('Erreur authorize:', error);

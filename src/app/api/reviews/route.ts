@@ -57,8 +57,9 @@ export async function GET(req: NextRequest) {
           user: {
             select: {
               id: true,
-              name: true,
-              image: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
             },
           },
           employee: {
@@ -68,8 +69,9 @@ export async function GET(req: NextRequest) {
               user: {
                 select: {
                   id: true,
-                  name: true,
-                  image: true,
+                  firstName: true,
+                  lastName: true,
+                  avatar: true,
                 },
               },
             },
@@ -214,8 +216,9 @@ export async function POST(req: NextRequest) {
         user: {
           select: {
             id: true,
-            name: true,
-            image: true,
+            firstName: true,
+            lastName: true,
+            avatar: true,
           },
         },
         employee: {
@@ -223,7 +226,8 @@ export async function POST(req: NextRequest) {
             id: true,
             user: {
               select: {
-                name: true,
+                firstName: true,
+                lastName: true,
               },
             },
           },

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { ProductCategory } from '@prisma/client';
 
 const createProductSchema = z.object({
   name: z.string().min(2),
@@ -11,7 +12,7 @@ const createProductSchema = z.object({
   descriptionEn: z.string(),
   price: z.number().positive(),
   compareAtPrice: z.number().positive().optional(),
-  category: z.string(),
+  category: z.nativeEnum(ProductCategory),
   brand: z.string().optional(),
   stock: z.number().int().min(0),
   sku: z.string().optional(),

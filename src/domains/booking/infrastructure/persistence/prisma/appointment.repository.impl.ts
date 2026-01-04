@@ -2,11 +2,10 @@
 // BOOKING DOMAIN - Prisma Appointment Repository Implementation
 // ============================================
 
-import type { IAppointmentRepository } from '../../domain/repositories/appointment.repository.interface';
+import type { IAppointmentRepository } from '../../../domain';
 import type { PaginatedResponse, PaginationParams } from '@/shared/types/common.types';
-import { Appointment } from '../../domain/entities/appointment.entity';
-import { TimeSlot } from '../../domain/value-objects/time-slot.vo';
-import { AppointmentStatus } from '@/shared/types/enums';
+import { Appointment, TimeSlot } from '../../../domain';
+import { AppointmentStatus } from '@prisma/client';
 import prisma from '@/shared/database/prisma.client';
 import { AppointmentMapper } from '../mappers/appointment.mapper';
 import { startOfDay, endOfDay, subHours } from 'date-fns';

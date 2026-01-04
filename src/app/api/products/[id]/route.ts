@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { ProductCategory } from '@prisma/client';
 
 const updateProductSchema = z.object({
   name: z.string().min(2).optional(),
@@ -10,7 +11,7 @@ const updateProductSchema = z.object({
   descriptionEn: z.string().optional(),
   price: z.number().positive().optional(),
   compareAtPrice: z.number().positive().optional(),
-  category: z.string().optional(),
+  category: z.nativeEnum(ProductCategory).optional(),
   brand: z.string().optional(),
   stock: z.number().int().min(0).optional(),
   images: z.array(z.string().url()).optional(),
@@ -26,15 +27,6 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         reviews: {
           take: 10,
           orderBy: { createdAt: 'desc' },
-          include: {
-            user: {
-              select: {
-                firstName: true,
-                lastName: true,
-                avatar: true,
-              },
-            },
-          },
         },
         _count: {
           select: {

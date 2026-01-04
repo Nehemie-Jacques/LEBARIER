@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { ServiceCategory } from '@prisma/client';
 
 const updateServiceSchema = z.object({
   name: z.string().min(2).optional(),
   description: z.string().optional(),
   price: z.number().positive().optional(),
   duration: z.number().positive().optional(),
-  category: z.string().optional(),
+  category: z.nativeEnum(ServiceCategory).optional(),
   imageUrl: z.string().url().optional(),
   isActive: z.boolean().optional(),
 });

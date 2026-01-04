@@ -8,7 +8,7 @@ import type { IAppointmentRepository } from '../../domain/repositories/appointme
 import type { IEventBus } from '@/shared/events/event-bus';
 import { Appointment } from '../../domain/entities/appointment.entity';
 import { TimeSlot } from '../../domain/value-objects/time-slot.vo';
-import { AppointmentStatus, LocationType } from '@/shared/types/enums';
+import { AppointmentStatus, LocationType } from '@prisma/client';
 import type { CreateAppointmentDTO } from '../dto/create-appointment.dto';
 import type { AppointmentResponseDTO } from '../dto/appointment-response.dto';
 import { SlotNotAvailableError, InvalidAppointmentDateError } from '../../domain/errors/booking.errors';

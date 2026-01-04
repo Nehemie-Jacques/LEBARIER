@@ -2,7 +2,7 @@
 // BOOKING DOMAIN - Appointment Entity
 // ============================================
 
-import { AppointmentStatus, LocationType } from '@/shared/types/enums';
+import { AppointmentStatus, LocationType } from '@prisma/client';
 import type { IEntity } from '@/shared/types/common.types';
 import { BusinessRuleViolationError } from '@/shared/errors/base.error';
 import { TimeSlot } from '../value-objects/time-slot.vo';

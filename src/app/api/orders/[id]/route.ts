@@ -28,10 +28,11 @@ export async function GET(
         user: {
           select: {
             id: true,
-            name: true,
+            firstName: true,
+            lastName: true,
             email: true,
             phone: true,
-            image: true,
+            avatar: true,
           },
         },
         items: {
@@ -181,7 +182,8 @@ export async function PUT(
         user: {
           select: {
             id: true,
-            name: true,
+            firstName: true,
+            lastName: true,
             email: true,
           },
         },

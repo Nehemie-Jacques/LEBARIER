@@ -1,0 +1,507 @@
+src/
+├── app
+│   ├── admin
+│   │   ├── analytics
+│   │   │   └── page.tsx
+│   │   ├── appointments
+│   │   │   └── page.tsx
+│   │   ├── content
+│   │   │   └── page.tsx
+│   │   ├── employees
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── marketing
+│   │   │   └── page.tsx
+│   │   ├── orders
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   ├── products
+│   │   │   └── page.tsx
+│   │   ├── reviews
+│   │   │   └── page.tsx
+│   │   ├── services
+│   │   │   └── page.tsx
+│   │   ├── settings
+│   │   │   └── page.tsx
+│   │   └── users
+│   │       └── page.tsx
+│   ├── api
+│   │   ├── admin
+│   │   │   └── users
+│   │   ├── appointments
+│   │   │   ├── availability
+│   │   │   ├── cancel
+│   │   │   ├── [id]
+│   │   │   └── route.ts
+│   │   ├── auth
+│   │   │   ├── login
+│   │   │   ├── logout
+│   │   │   ├── [...nextauth]
+│   │   │   ├── register
+│   │   │   └── reset-password
+│   │   ├── chatbot
+│   │   │   └── route.ts
+│   │   ├── employee
+│   │   │   └── appointments
+│   │   ├── employees
+│   │   │   ├── [id]
+│   │   │   ├── route.ts
+│   │   │   └── schedule
+│   │   ├── loyalty
+│   │   │   ├── points
+│   │   │   └── rewards
+│   │   ├── notifications
+│   │   │   ├── email
+│   │   │   ├── mark-read
+│   │   │   ├── send
+│   │   │   └── sms
+│   │   ├── orders
+│   │   │   ├── [id]
+│   │   │   └── route.ts
+│   │   ├── payments
+│   │   │   ├── momo
+│   │   │   ├── orange-money
+│   │   │   └── stripe
+│   │   ├── products
+│   │   │   ├── [id]
+│   │   │   └── route.ts
+│   │   ├── reviews
+│   │   │   ├── [id]
+│   │   │   └── route.ts
+│   │   ├── services
+│   │   │   ├── [id]
+│   │   │   └── route.ts
+│   │   ├── upload
+│   │   │   └── route.ts
+│   │   ├── user
+│   │   │   └── profile
+│   │   └── webhooks
+│   │       ├── analytics
+│   │       ├── n8n
+│   │       ├── sendgrid
+│   │       └── stripe
+│   ├── (auth)
+│   │   ├── forgot-password
+│   │   │   └── page.tsx
+│   │   ├── login
+│   │   │   ├── actions.ts
+│   │   │   └── page.tsx
+│   │   ├── register
+│   │   │   └── page.tsx
+│   │   ├── reset-password
+│   │   │   └── page.tsx
+│   │   └── verify-email
+│   │       └── page.tsx
+│   ├── booking
+│   │   ├── confirmation
+│   │   │   └── page.tsx
+│   │   ├── datetime
+│   │   │   └── page.tsx
+│   │   ├── employee
+│   │   │   └── page.tsx
+│   │   ├── location
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── payment
+│   │       └── page.tsx
+│   ├── employee
+│   │   ├── appointments
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── portfolio
+│   │   │   └── page.tsx
+│   │   ├── schedule
+│   │   │   └── page.tsx
+│   │   └── stats
+│   │       └── page.tsx
+│   ├── error.tsx
+│   ├── layout.tsx
+│   ├── loading.tsx
+│   ├── (main)
+│   │   ├── about
+│   │   │   └── page.tsx
+│   │   ├── blog
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   ├── contact
+│   │   │   └── page.tsx
+│   │   ├── gallery
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── services
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   └── team
+│   │       ├── [id]
+│   │       └── page.tsx
+│   ├── not-found.tsx
+│   ├── page.tsx
+│   ├── profile
+│   │   ├── appointments
+│   │   │   └── page.tsx
+│   │   ├── favorites
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── loyalty
+│   │   │   └── page.tsx
+│   │   ├── orders
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── settings
+│   │       └── page.tsx
+│   ├── shop
+│   │   ├── cart
+│   │   │   └── page.tsx
+│   │   ├── checkout
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── [slug]
+│   │       └── page.tsx
+│   ├── test-404-dark
+│   │   └── page.tsx
+│   ├── test-error
+│   │   └── page.tsx
+│   ├── test-error-dark
+│   │   └── page.tsx
+│   ├── test-loading-dark
+│   │   └── page.tsx
+│   ├── test-theme
+│   │   └── page.tsx
+│   ├── test-verify-email-dark
+│   │   └── page.tsx
+│   ├── test-verify-email-light
+│   │   └── page.tsx
+│   └── test-verify-light
+│       └── page.tsx
+├── components
+│   ├── admin
+│   │   ├── AdminSidebar.tsx
+│   │   └── DashboardStats.tsx
+│   ├── auth
+│   │   └── LoginForm.tsx
+│   ├── booking
+│   │   ├── BookingStepper.tsx
+│   │   ├── EmployeeSelector.tsx
+│   │   └── ServiceSelector.tsx
+│   ├── chatbot
+│   │   └── ChatWidget.tsx
+│   ├── common
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── LoadingSpinner.tsx
+│   │   └── ThemeToggle.tsx
+│   ├── home
+│   │   ├── CTASection.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── LoyaltySection.tsx
+│   │   ├── ServicesGrid.tsx
+│   │   ├── TeamCarousel.tsx
+│   │   └── TestimonialsCarousel.tsx
+│   ├── layout
+│   │   ├── Breadcrumb.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Header.tsx
+│   │   ├── MobileMenu.tsx
+│   │   └── Sidebar.tsx
+│   ├── notifications
+│   │   └── NotificationBell.tsx
+│   ├── profile
+│   │   └── ProfileSidebar.tsx
+│   ├── providers
+│   │   └── ThemeProvider.tsx
+│   ├── reviews
+│   │   └── ReviewCard.tsx
+│   ├── services
+│   │   └── ServiceCard.tsx
+│   ├── shop
+│   │   ├── CartDrawer.tsx
+│   │   └── ProductCard.tsx
+│   ├── team
+│   │   └── EmployeeCard.tsx
+│   └── ui
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── dialog.tsx
+│       ├── input.tsx
+│       └── label.tsx
+├── domains
+│   ├── analytics
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── booking
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── index.ts
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── catalog
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── content
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── employee
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── loyalty
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── notification
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── order
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── payment
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   ├── review
+│   │   ├── application
+│   │   │   ├── dto
+│   │   │   ├── events
+│   │   │   ├── services
+│   │   │   └── use-cases
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   ├── errors
+│   │   │   ├── repositories
+│   │   │   ├── services
+│   │   │   └── value-objects
+│   │   ├── infrastructure
+│   │   │   ├── api
+│   │   │   ├── messaging
+│   │   │   └── persistence
+│   │   └── presentation
+│   │       ├── api
+│   │       └── components
+│   └── user-management
+│       ├── application
+│       │   ├── dto
+│       │   ├── events
+│       │   ├── services
+│       │   └── use-cases
+│       ├── domain
+│       │   ├── entities
+│       │   ├── errors
+│       │   ├── repositories
+│       │   ├── services
+│       │   └── value-objects
+│       ├── infrastructure
+│       │   ├── api
+│       │   ├── messaging
+│       │   └── persistence
+│       └── presentation
+│           ├── api
+│           └── components
+├── hooks
+│   ├── useAuth.ts
+│   ├── useBooking.ts
+│   └── useCart.ts
+├── i18n
+│   ├── config.ts
+│   ├── locales
+│   │   ├── en.json
+│   │   └── fr.json
+│   └── utils.ts
+├── lib
+│   ├── analytics
+│   │   └── google-analytics.ts
+│   ├── auth-helpers.ts
+│   ├── auth.ts
+│   ├── chatbot
+│   │   └── openai.ts
+│   ├── constants.ts
+│   ├── email
+│   │   ├── sendgrid.ts
+│   │   ├── send-password-reset.ts
+│   │   ├── send-welcome.ts
+│   │   └── templates
+│   │       └── appointment-confirmation.tsx
+│   ├── payments
+│   │   ├── momo.ts
+│   │   ├── orange-money.ts
+│   │   └── stripe.ts
+│   ├── prisma.ts
+│   ├── sms
+│   │   └── twilio.ts
+│   ├── storage
+│   │   └── s3.ts
+│   ├── utils.ts
+│   └── validations.ts
+├── middleware.ts
+├── shared
+│   ├── config
+│   ├── database
+│   │   └── prisma.client.ts
+│   ├── errors
+│   │   └── base.error.ts
+│   ├── events
+│   │   ├── domain-event.ts
+│   │   └── event-bus.ts
+│   ├── index.ts
+│   ├── middleware
+│   ├── types
+│   │   ├── common.types.ts
+│   │   └── enums.ts
+│   ├── utils
+│   │   ├── date.utils.ts
+│   │   ├── string.utils.ts
+│   │   └── validation.utils.ts
+│   └── validation
+│       └── schemas
+├── store
+│   ├── authStore.ts
+│   ├── bookingStore.ts
+│   └── cartStore.ts
+├── styles
+│   └── globals.css
+└── types
+    ├── api.ts
+    ├── global.d.ts
+    ├── models.ts
+    └── next-auth.d.ts
+
+356 directories, 149 files
